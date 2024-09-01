@@ -1,10 +1,8 @@
-import './App.css';
+import Body from './components/Body';
 
 function App() {
   return (
-    <div className = "text-center">
-      <h1 className=" text-xl text-blue-300" >Kings and Queens</h1>
-    </div>
+    <Body/>
   );
 }
 
