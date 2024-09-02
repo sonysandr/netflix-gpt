@@ -1,13 +1,21 @@
 import React, { useRef, useState } from "react";
 import Header from "./Header";
 import { checkValidData } from "../utils/validate";
-
+import { useDispatch } from "react-redux";
 import { auth } from "../utils/firebase";
-import { createUserWithEmailAndPassword,signInWithEmailAndPassword } from "firebase/auth";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  updateProfile,
+} from "firebase/auth";
+import { useNavigate } from "react-router-dom";
+import { addUser } from "../utils/userSlice";
 
 const Login = () => {
   const [signInForm, setSignForm] = useState(true);
   const [errorMessage, setErrorMessage] = useState(null);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   //   Sign In and Sign Up toggle
   const toggleForm = () => {
@@ -15,17 +23,13 @@ const Login = () => {
   };
 
   //   useRef hook to reference the values from inputs
-  //   const name = useRef(null); //set initial value to empty string
+  const name = useRef(null); //set initial value to empty string
   const email = useRef(null); // we give initial value null
   const password = useRef(null); // we give initial value null
 
   const handleSignButtonClick = () => {
     // Validate the form data
-    const message = checkValidData(
-      
-      email.current.value,
-      password.current.value
-    );
+    const message = checkValidData(email.current.value, password.current.value);
     setErrorMessage(message);
 
     if (message) return;
@@ -42,6 +46,31 @@ const Login = () => {
           // Signed up
           const user = userCredential.user;
           console.log(user);
+          // update the user
+          updateProfile(user, {
+            displayName: name.current.value,
+            photoURL: "https://avatars.githubusercontent.com/u/122523474?v=4",
+          })
+            .then(() => {
+              // Profile updated!
+              // ...
+              const { uid, email, displayName, photoURL } = auth.currentUser;
+              // ...
+              dispatch(
+                addUser({
+                  uid: uid,
+                  email: email,
+                  displayName: displayName,
+                  photoURL: photoURL,
+                })
+              );
+              navigate("/browse");
+            })
+            .catch((error) => {
+              // An error occurred
+              // ...
+              setErrorMessage(error.message);
+            });
           // ...
         })
         .catch((error) => {
@@ -52,19 +81,23 @@ const Login = () => {
         });
     } else {
       // Sign in logic
-      signInWithEmailAndPassword(auth, email.current.value,
-        password.current.value)
-      .then((userCredential) => {
-        // Signed in 
-        const user = userCredential.user;
-        console.log(user);
-        // ...
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        setErrorMessage(errorCode + " " + errorMessage)
-      });
+      signInWithEmailAndPassword(
+        auth,
+        email.current.value,
+        password.current.value
+      )
+        .then((userCredential) => {
+          // Signed in
+          const user = userCredential.user;
+          console.log(user);
+          // ...
+          navigate("/browse");
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          setErrorMessage(errorCode + " " + errorMessage);
+        });
     }
   };
 
@@ -92,7 +125,7 @@ const Login = () => {
         {!signInForm ? (
           // name input
           <input
-            // ref={name}
+            ref={name}
             type="text"
             placeholder="Full Name"
             className=" p-4 my-4 w-full rounded-md bg-gray-700"
