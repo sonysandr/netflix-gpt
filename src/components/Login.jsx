@@ -2,25 +2,70 @@ import React, { useRef, useState } from "react";
 import Header from "./Header";
 import { checkValidData } from "../utils/validate";
 
+import { auth } from "../utils/firebase";
+import { createUserWithEmailAndPassword,signInWithEmailAndPassword } from "firebase/auth";
+
 const Login = () => {
-  const [signForm, setSignForm] = useState(true);
+  const [signInForm, setSignForm] = useState(true);
   const [errorMessage, setErrorMessage] = useState(null);
 
   //   Sign In and Sign Up toggle
   const toggleForm = () => {
-    setSignForm(!signForm);
+    setSignForm(!signInForm);
   };
 
   //   useRef hook to reference the values from inputs
-  const name = useRef(null); // initial value as null
+  //   const name = useRef(null); //set initial value to empty string
   const email = useRef(null); // we give initial value null
   const password = useRef(null); // we give initial value null
 
   const handleSignButtonClick = () => {
     // Validate the form data
-
-    const message = checkValidData(name.current.value,email.current.value, password.current.value);
+    const message = checkValidData(
+      
+      email.current.value,
+      password.current.value
+    );
     setErrorMessage(message);
+
+    if (message) return;
+    // sign in /sign up Logic
+
+    if (!signInForm) {
+      // Sign up logic
+      createUserWithEmailAndPassword(
+        auth,
+        email.current.value,
+        password.current.value
+      )
+        .then((userCredential) => {
+          // Signed up
+          const user = userCredential.user;
+          console.log(user);
+          // ...
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          // Error message for Sign Up
+          setErrorMessage(errorCode + "-" + errorMessage);
+        });
+    } else {
+      // Sign in logic
+      signInWithEmailAndPassword(auth, email.current.value,
+        password.current.value)
+      .then((userCredential) => {
+        // Signed in 
+        const user = userCredential.user;
+        console.log(user);
+        // ...
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        setErrorMessage(errorCode + " " + errorMessage)
+      });
+    }
   };
 
   return (
@@ -40,14 +85,14 @@ const Login = () => {
         {/* Form Heading Toggle */}
 
         <h1 className=" font-bold  text-3xl p-2 m-2">
-          {signForm ? "Sign In" : "Sign Up"}{" "}
+          {signInForm ? "Sign In" : "Sign Up"}{" "}
         </h1>
 
         {/* sign in and sign up input toggle */}
-        {!signForm ? (
+        {!signInForm ? (
           // name input
           <input
-            ref={name}
+            // ref={name}
             type="text"
             placeholder="Full Name"
             className=" p-4 my-4 w-full rounded-md bg-gray-700"
@@ -63,11 +108,13 @@ const Login = () => {
         />
         {/* Password input */}
         <input
+          autoComplete="current-password"
           ref={password}
           type="password"
           placeholder="Password"
           className=" p-4 my-4 w-full rounded-md bg-gray-700"
         />
+
         {/* Error messfe */}
         <p className="py-2 text-red-600 font-bold text-md ">{errorMessage}</p>
 
@@ -76,10 +123,10 @@ const Login = () => {
           className=" p-4 my-6 bg-red-600  rounded-md w-full"
           onClick={handleSignButtonClick}
         >
-          {signForm ? "Sign In" : "Sign Up"}
+          {signInForm ? "Sign In" : "Sign Up"}
         </button>
 
-        {!signForm ? (
+        {!signInForm ? (
           <p className=" py-6 cursor-pointer" onClick={toggleForm}>
             Already have a Netflix acoount ? Sign in Now
           </p>
