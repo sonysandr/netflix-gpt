@@ -8,13 +8,12 @@ import {
   signInWithEmailAndPassword,
   updateProfile,
 } from "firebase/auth";
-import { useNavigate } from "react-router-dom";
 import { addUser } from "../utils/userSlice";
+import { USER_AVATAR } from "../utils/constants";
 
 const Login = () => {
   const [signInForm, setSignForm] = useState(true);
   const [errorMessage, setErrorMessage] = useState(null);
-  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   //   Sign In and Sign Up toggle
@@ -32,11 +31,12 @@ const Login = () => {
     const message = checkValidData(email.current.value, password.current.value);
     setErrorMessage(message);
 
+    //  if there is (message and not null) dont go ahead other wise do sign in and sign up
     if (message) return;
     // sign in /sign up Logic
 
     if (!signInForm) {
-      // Sign up logic
+      // SIGN UP LOGIC
       createUserWithEmailAndPassword(
         auth,
         email.current.value,
@@ -49,7 +49,7 @@ const Login = () => {
           // update the user
           updateProfile(user, {
             displayName: name.current.value,
-            photoURL: "https://avatars.githubusercontent.com/u/122523474?v=4",
+            photoURL: USER_AVATAR,
           })
             .then(() => {
               // Profile updated!
@@ -64,7 +64,6 @@ const Login = () => {
                   photoURL: photoURL,
                 })
               );
-              navigate("/browse");
             })
             .catch((error) => {
               // An error occurred
@@ -80,7 +79,7 @@ const Login = () => {
           setErrorMessage(errorCode + "-" + errorMessage);
         });
     } else {
-      // Sign in logic
+      // SIGN IN LOGIC
       signInWithEmailAndPassword(
         auth,
         email.current.value,
@@ -91,7 +90,6 @@ const Login = () => {
           const user = userCredential.user;
           console.log(user);
           // ...
-          navigate("/browse");
         })
         .catch((error) => {
           const errorCode = error.code;
