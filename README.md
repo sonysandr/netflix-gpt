@@ -20,6 +20,16 @@
 - Bug fix : if User not logged in redirect /browse to login page & vice-versa
 - Unsubscribed to onAuthStateChanged callback
 - Added hardcoded values to constants file
+- Register on TMdb api & create an app and  get access token
+- Get data from tmdb now playing movies  list api
+- Custom hook for now playing movie
+- Created a movieSlice
+- Updated the store with movie data
+- Planning for the main container and secondary container
+- fetch data for trailer video
+- Updated the store with trailer video Data
+- Embedded the Youtube video and make it Autoplay and mute
+- Tailwindcss for the container
 
 # Features
 - Login/Signup

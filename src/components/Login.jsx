@@ -45,7 +45,7 @@ const Login = () => {
         .then((userCredential) => {
           // Signed up
           const user = userCredential.user;
-          console.log(user);
+          // console.log(user);
           // update the user
           updateProfile(user, {
             displayName: name.current.value,
@@ -88,7 +88,7 @@ const Login = () => {
         .then((userCredential) => {
           // Signed in
           const user = userCredential.user;
-          console.log(user);
+          // console.log(user);
           // ...
         })
         .catch((error) => {
@@ -110,12 +110,12 @@ const Login = () => {
         />
       </div>
       <form
-        className=" w-3/12 rounded-md  bg-black p-12 absolute right-0 left-0  mx-auto my-36 text-white bg-opacity-80  "
+        className="absolute left-0 right-0 w-3/12 p-12 mx-auto text-white bg-black rounded-md my-36 bg-opacity-80"
         onClick={(e) => e.preventDefault()}
       >
         {/* Form Heading Toggle */}
 
-        <h1 className=" font-bold  text-3xl p-2 m-2">
+        <h1 className="p-2 m-2 text-3xl font-bold ">
           {signInForm ? "Sign In" : "Sign Up"}{" "}
         </h1>
 
@@ -126,7 +126,7 @@ const Login = () => {
             ref={name}
             type="text"
             placeholder="Full Name"
-            className=" p-4 my-4 w-full rounded-md bg-gray-700"
+            className="w-full p-4 my-4 bg-gray-700 rounded-md "
           />
         ) : null}
 
@@ -135,7 +135,7 @@ const Login = () => {
           ref={email}
           type="text"
           placeholder="Email Address"
-          className=" p-4 my-4 w-full rounded-md bg-gray-700"
+          className="w-full p-4 my-4 bg-gray-700 rounded-md "
         />
         {/* Password input */}
         <input
@@ -143,26 +143,26 @@ const Login = () => {
           ref={password}
           type="password"
           placeholder="Password"
-          className=" p-4 my-4 w-full rounded-md bg-gray-700"
+          className="w-full p-4 my-4 bg-gray-700 rounded-md "
         />
 
         {/* Error messfe */}
-        <p className="py-2 text-red-600 font-bold text-md ">{errorMessage}</p>
+        <p className="py-2 font-bold text-red-600 text-md ">{errorMessage}</p>
 
         {/* Sign In or Sign Up button */}
         <button
-          className=" p-4 my-6 bg-red-600  rounded-md w-full"
+          className="w-full p-4 my-6 bg-red-600 rounded-md "
           onClick={handleSignButtonClick}
         >
           {signInForm ? "Sign In" : "Sign Up"}
         </button>
 
         {!signInForm ? (
-          <p className=" py-6 cursor-pointer" onClick={toggleForm}>
+          <p className="py-6 cursor-pointer " onClick={toggleForm}>
             Already have a Netflix acoount ? Sign in Now
           </p>
         ) : (
-          <p className=" py-6 cursor-pointer" onClick={toggleForm}>
+          <p className="py-6 cursor-pointer " onClick={toggleForm}>
             New to Netflix ? Sign Up Now
           </p>
         )}
