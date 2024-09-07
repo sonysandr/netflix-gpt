@@ -30,6 +30,15 @@
 - Updated the store with trailer video Data
 - Embedded the Youtube video and make it Autoplay and mute
 - Tailwindcss for the container
+- Build Secondary Components
+- Build Movie List
+- Build Movie Card
+- TMDb img url
+- Made Browse page better with tailwind
+- Made the iframe embedded Trailer video autoplay,loop & muted
+- usePopularMovies Custom hook
+- useUpcomingMovies Custom hook
+
 
 # Features
 - Login/Signup
