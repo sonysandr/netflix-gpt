@@ -37,7 +37,10 @@
 - Made Browse page better with tailwind
 - Made the iframe embedded Trailer video autoplay,loop & muted
 - usePopularMovies Custom hook
-- useUpcomingMovies Custom hook
+- useUpcomingMovies102 Custom hook
+- GPT Search Page
+- GPT Search Bar
+- Multi Language Feature
 
 
 # Features
