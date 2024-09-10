@@ -8,6 +8,8 @@ export const OMDB_API_URL = `http://www.omdbapi.com/?i=tt3896198&apikey=5c49799f
 
 // TMdb api url
 export const TOP_MOVIES_API_URL = 'https://api.themoviedb.org/3/movie/now_playing';
+export const POPULAR_MOVIES_API_URL = 'https://api.themoviedb.org/3/movie/popular';
+export const UPCOMIMG_MOVIES_API_URL = 'https://api.themoviedb.org/3/movie/upcoming';
 
 export const API_OPTIONS = {
 	method: 'GET',
@@ -16,3 +18,5 @@ export const API_OPTIONS = {
 	  Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3ZTNhZTM5N2I2YmFjNDBhZWI3ZGRhNjU3OWZkYWVmNiIsIm5iZiI6MTcyNTY0MTA0NS43NTgyOTIsInN1YiI6IjY2ZGIyYTM5MTk3MzQwNjhkM2NjZTYyYSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.CHmDIrN8YtDj2E0kwzd7MWKyYyEhPSDSQnRW7IPUSVw'
 	}
   };
+
+  export const IMG_CDN_URL = "https://image.tmdb.org/t/p/w500";
