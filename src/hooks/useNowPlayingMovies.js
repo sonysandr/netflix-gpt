@@ -2,13 +2,16 @@ import { useEffect } from "react";
 import { addNowPlayingMovies } from "../utils/movieSlice";
 // import { dummyData } from "../utils/dummyData";
 import { API_OPTIONS, TOP_MOVIES_API_URL } from "../utils/constants";
-import {useDispatch} from "react-redux"
+import {useDispatch, useSelector} from "react-redux"
 
 
 const useNowPlayingMovies = () =>{
 
     //  fetch data from api and update store
   const dispatch = useDispatch();
+
+  // memoisation
+  const nowPlayingMovies = useSelector((store)=>store.movies.nowPlayingMovies);
 
   // API CALL function
   const getNowPlayingMovies = async () => {
@@ -24,7 +27,7 @@ const useNowPlayingMovies = () =>{
 
   // we make the api call insde  the useEffect() hook
   useEffect(() => {
-    getNowPlayingMovies();
+   !nowPlayingMovies && getNowPlayingMovies();
   }, []);
 };
 

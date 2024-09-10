@@ -2,13 +2,16 @@ import { useEffect } from "react";
 import {  addPopularMovies } from "../utils/movieSlice";
 // import { dummyData } from "../utils/dummyData";
 import { API_OPTIONS, POPULAR_MOVIES_API_URL } from "../utils/constants";
-import {useDispatch} from "react-redux"
+import {useDispatch, useSelector} from "react-redux"
 
 
 const usePopularMovies = () =>{
 
     //  fetch data from api and update store
   const dispatch = useDispatch();
+
+  // for memoisation
+   const popularMovies = useSelector((store)=>store.movies.popularMovies);
 
   // API CALL function
   const getPopularMovies = async () => {
@@ -24,7 +27,8 @@ const usePopularMovies = () =>{
 
   // we make the api call insde  the useEffect() hook
   useEffect(() => {
-    getPopularMovies();
+
+   !popularMovies && getPopularMovies();
   }, []);
 };
 

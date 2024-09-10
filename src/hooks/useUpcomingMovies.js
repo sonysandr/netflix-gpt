@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { API_OPTIONS, UPCOMIMG_MOVIES_API_URL } from "../utils/constants"
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {addUpcomingMovies} from "../utils/movieSlice"
 
 const useUpcomingMovies = () =>{
@@ -8,6 +8,8 @@ const useUpcomingMovies = () =>{
     //after fetching data update the store
     const dispatch = useDispatch(); 
 
+    // for memoisation
+    const upcomingMovies = useSelector((store)=>store.movies.upcomingMovies);
 
     // call the API
 const getUpcomingMovies = async () =>{
@@ -18,7 +20,7 @@ const getUpcomingMovies = async () =>{
 }
 
 useEffect(()=>{
-    getUpcomingMovies();
+  !upcomingMovies &&  getUpcomingMovies();
 },[])
 }
 
