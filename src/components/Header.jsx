@@ -77,8 +77,6 @@ const Header = () => {
         w-screen 
         px-4 py-2 
         bg-gradient-to-b from-black
-      sm:bg-blue-900
-      md:bg-green-900 
         md:flex-row
         `}
     >
