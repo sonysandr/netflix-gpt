@@ -104,13 +104,13 @@ const Login = () => {
       <Header />
       <div>
         <img
-          className="absolute"
+          className="absolute object-cover w-screen h-screen"
           src={BG_URL}
           alt="bgimage"
         />
       </div>
       <form
-        className="absolute left-0 right-0 w-3/12 p-12 mx-auto text-white bg-black rounded-md my-36 bg-opacity-80"
+        className="absolute left-0 right-0 p-12 mx-auto text-white bg-black rounded-md sm:w-full md:w-[640px] my-36 bg-opacity-80"
         onClick={(e) => e.preventDefault()}
       >
         {/* Form Heading Toggle */}

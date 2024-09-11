@@ -5,7 +5,7 @@ const MovieList = ({ title, movies }) => {
   // console.log(movies);
   return (
     <div className="p-6 bg-transparent">
-      <h1 className="py-6 text-3xl text-white ">{title}</h1>
+      <h1 className="py-6 text-xl text-white md:text-3xl sm:text-2xl ">{title}</h1>
       <div className="flex overflow-hidden hover:overflow-x-scroll whitespace-nowrap">
         <div className="flex flex-row ">
           {movies?.map((movie, index) => (
